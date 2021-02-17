@@ -2,4 +2,73 @@
 skinparam dpi 600
 scale 1920*1080
 
+note "All names are subject to change" as N
+
+interface Screen {
+}
+note left: This is a LibGDX thing
+
+abstract MenuScreen {
+}
+
+class MainMenuScreen {
+}
+
+class OptionsScreen{
+}
+
+class PauseScreen{
+}
+
+class MainGameScreen {
+}
+
+interface IDrawable {
+}
+
+interface ITouchable {
+}
+
+interface ISavable {
+    {method} void save()
+    {method} void load()
+}
+
+abstract Drawable{
+}
+
+class Button {
+}
+
+class SomeElement {
+}
+note bottom: This is not meant to be one class.\nIt just represents all other things that need to be drawn.
+
+class TextRenderer{
+}
+
+class SoundEngine{
+}
+note bottom: This one I'm really\nnot sure about.\nI have some ideas,\nbut the are not very good.
+
+
+Screen <|-- MainGameScreen
+Screen <|-- MenuScreen
+
+MenuScreen <|-- MainMenuScreen
+MenuScreen <|-- PauseScreen
+MenuScreen <|-- OptionsScreen
+
+IDrawable <|-- Drawable
+IDrawable <|-- TextRenderer
+
+ITouchable <|-- Button
+
+ISavable <|-- SomeElement
+
+Drawable <|-- Button
+Drawable <|-- SomeElement
+
+
+
 @enduml
