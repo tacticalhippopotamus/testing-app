@@ -3,24 +3,43 @@ package com.testing;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.testing.GameObject;
 
 import java.util.List;
 
 public abstract class GameScreen implements Screen {
+    /**
+     * Every {@link GameObject} the screen contains must be in this list
+     * <p>
+     * The screen automatically calls {@link GameObject#init()}, {@link GameObject#update()}
+     * and {@link GameObject#clean()} on all contained objects when appropriate. This ensures
+     * all objects are initialised, updated and disposed of when expected. It also ensures all
+     * type functionality inherited from OTIs are called.
+     * <p>
+     * The only things that should not be stored in here are flags, counters and other atomic
+     * attributes.
+     */
     protected List<GameObject> objects;
 
-    public final void init(){
+    /**
+     * Calls {@link GameObject#init()} on all contained {@link GameObject}
+     */
+    public final void init() {
         for (GameObject object : objects)
             object.init();
     }
 
-    public final void update(){
+    /**
+     * Calls {@link GameObject#update()} on all contained {@link GameObject}
+     */
+    public final void update() {
         for (GameObject object : objects)
             object.update();
     }
 
-    public final void clean(){
+    /**
+     * Calls {@link GameObject#clean()} on all contained {@link GameObject}
+     */
+    public final void clean() {
         for (GameObject object : objects)
             object.clean();
     }
@@ -44,7 +63,7 @@ public abstract class GameScreen implements Screen {
     }
 
     /**
-     * @param width width
+     * @param width  width
      * @param height height
      * @see ApplicationListener#resize(int, int)
      */
