@@ -4,12 +4,37 @@ scale 1920*1080
 
 note "All names are subject to change" as N
 
+
+package oti {
+    class IDrawable
+    class ITouchable
+    class ISavable
+}
+
+package screens {
+    class MainGameScreen
+    class MainMenuScreen
+    class OptionsScreen
+    class PauseScreen
+}
+
+package objects {
+    class Button
+}
+
+
 interface Screen {
 }
 note left: This is a LibGDX thing
 
-abstract MenuScreen {
+abstract GameScreen {
+    #objects:List<GameObject>
+
+    +init():void
+    +update():void
+    +clean():void
 }
+note left: init, update and clean\ncall all respective\nfunctions in every object
 
 class MainMenuScreen {
 }
@@ -24,27 +49,32 @@ class MainGameScreen {
 }
 
 interface IDrawable {
+    +initDrawable():void
+    +updateDrawable():void
+    +disposeDrawable():void
 }
+note top: One of many OTI (object type interface)
 
 interface ITouchable {
+    +initTouchable():void
+    +updateTouchable():void
+    +disposeTouchable():void
 }
 
 interface ISavable {
-    {method} void save()
-    {method} void load()
+    +initSavable():void
+    +updateSavable():void
+    +disposeSavable():void
 }
 
-abstract Drawable{
+abstract class GameObject {
+    +init():void
+    +update():void
+    +clean():void
 }
+note top: init, update and clean call\nall respective inherited oti functions
 
 class Button {
-}
-
-class SomeElement {
-}
-note bottom: This is not meant to be one class.\nIt just represents all other things that need to be drawn.
-
-class TextRenderer{
 }
 
 class SoundEngine{
@@ -52,23 +82,15 @@ class SoundEngine{
 note bottom: This one I'm really\nnot sure about.\nI have some ideas,\nbut the are not very good.
 
 
-Screen <|-- MainGameScreen
-Screen <|-- MenuScreen
+Screen <|-- GameScreen
 
-MenuScreen <|-- MainMenuScreen
-MenuScreen <|-- PauseScreen
-MenuScreen <|-- OptionsScreen
+GameScreen <|-- MainMenuScreen
+GameScreen <|-- PauseScreen
+GameScreen <|-- OptionsScreen
+GameScreen <|-- MainGameScreen
 
-IDrawable <|-- Drawable
-IDrawable <|-- TextRenderer
-
+IDrawable <|-- Button
 ITouchable <|-- Button
-
-ISavable <|-- SomeElement
-
-Drawable <|-- Button
-Drawable <|-- SomeElement
-
-
+GameObject <|-- Button
 
 @enduml
