@@ -1,5 +1,7 @@
 package com.testing.screens;
 
-public class OptionsScreen extends MenuScreen {
+import com.testing.GameScreen;
+
+public class OptionsScreen extends GameScreen {
 
 }

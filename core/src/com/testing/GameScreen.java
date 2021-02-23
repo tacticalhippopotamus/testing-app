@@ -1,8 +1,30 @@
-package com.testing.screens;
+package com.testing;
 
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.testing.GameObject;
 
-public abstract class MenuScreen implements Screen {
+import java.util.List;
+
+public abstract class GameScreen implements Screen {
+    protected List<GameObject> objects;
+
+    public final void init(){
+        for (GameObject object : objects)
+            object.init();
+    }
+
+    public final void update(){
+        for (GameObject object : objects)
+            object.update();
+    }
+
+    public final void clean(){
+        for (GameObject object : objects)
+            object.clean();
+    }
+
     /**
      * Called when this screen becomes the current screen for a {@link Game}.
      */
