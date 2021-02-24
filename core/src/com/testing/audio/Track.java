@@ -3,7 +3,6 @@ package com.testing.audio;
 /**
  * Stores all paths to music tracks files.
  * <p>
- *
  * Used to refer to specific tracks
  */
 public enum Track {
@@ -17,7 +16,8 @@ public enum Track {
     THEME("sound/kevin_macleod_wholesome.ogg");
 
     public final String path;
-    Track(String path){
+
+    Track(String path) {
         this.path = path;
     }
 }

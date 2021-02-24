@@ -9,12 +9,10 @@ import java.util.HashMap;
 /**
  * Main class to manage all sound.
  * <p>
- *
  * This is a singleton class. The intended method to use it is to get a reference to the instance,
  * then call all methods on that reference. Initialization will happen when the instance is obtained
  * for the first time.
  * <p>
- *
  * Stores both sound effects and music. Can play, stop (music only) and change volume.
  * Relies on {@link Sample} and {@link Track} enums to supply the paths to the sound files.
  */
@@ -49,6 +47,10 @@ public class SoundEngine {
 
     }
 
+    public static SoundEngine getInstance() {
+        return instance;
+    }
+
     public void play(Sample sample) {
         samples.get(sample).play(sampleVolume);
     }
@@ -56,14 +58,14 @@ public class SoundEngine {
     /**
      * Plays a sound track
      * <p>
-     *
      * If a {@link Music} has already been created, it is stopped and disposed of.
      * The new {@link Music} is loaded from the {@link Track}, its volume and looping state are set,
      * then it is played.
+     *
      * @param track Track to be played
      */
     public void play(Track track) {
-        if(music != null){
+        if (music != null) {
             music.stop();
             music.dispose();
         }
@@ -74,46 +76,40 @@ public class SoundEngine {
         music.setLooping(true);
     }
 
-
     /**
      * Sets the volume for all samples.
      * <p>
-     *
      * SIDE EFFECT: value of the field {@link SoundEngine#sampleVolume} is changed in order to affect the volume of
      * the next {@link Sound } to be played.
+     *
      * @param volume new volume of {@link Sound}s
      */
-    public void setSampleVolume(float volume){
+    public void setSampleVolume(float volume) {
         sampleVolume = volume;
     }
 
     /**
      * Sets the volume for the currently playing {@link Music}, and all future {@link Music}s.
      * <p>
-     *
      * SIDE EFFECT: value of the field {@link SoundEngine#trackVolume} is changed in order to affect the volume of
      * the next {@link Music } to be played.
+     *
      * @param volume new volume for the current {@link Music}, and for all future {@link Music}s.
      */
-    public void setTrackVolume(float volume){
+    public void setTrackVolume(float volume) {
         trackVolume = volume;
         music.setVolume(volume);
     }
 
-    public void pauseTrack(){
+    public void pauseTrack() {
         music.pause();
     }
 
-    public void unpauseTrack(){
+    public void unpauseTrack() {
         music.play();
     }
 
     public void dispose(Sample sample) {
         samples.get(sample).dispose();
-    }
-
-
-    public static SoundEngine getInstance() {
-        return instance;
     }
 }
