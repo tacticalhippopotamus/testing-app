@@ -1,14 +1,14 @@
 package com.testing.objects;
 
-import com.testing.GameObject;
-import com.testing.GameScreen;
-import com.testing.oti.IDrawable;
-import com.testing.oti.ITouchable;
+import com.testing.BaseObject;
+import com.testing.BaseScreen;
+import com.testing.oti.OTIDrawable;
+import com.testing.oti.OTITouchable;
 
 /**
  * Simple button example for OTI usage
  */
-public class Button extends GameObject implements ITouchable, IDrawable {
+public class Button extends BaseObject implements OTITouchable, OTIDrawable {
     /**
      * all initialisation of related items needs to happen in here
      */
@@ -18,7 +18,7 @@ public class Button extends GameObject implements ITouchable, IDrawable {
     }
 
     /**
-     * called every frame by the {@link GameScreen} containing this object
+     * called every frame by the {@link BaseScreen} containing this object
      */
     @Override
     public void updateDrawable() {
@@ -42,7 +42,7 @@ public class Button extends GameObject implements ITouchable, IDrawable {
     }
 
     /**
-     * called every frame by the {@link GameScreen} containing this object
+     * called every frame by the {@link BaseScreen} containing this object
      */
     @Override
     public void updateTouchable() {

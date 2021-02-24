@@ -6,41 +6,41 @@ import com.badlogic.gdx.Screen;
 
 import java.util.List;
 
-public abstract class GameScreen implements Screen {
+public abstract class BaseScreen implements Screen {
     /**
-     * Every {@link GameObject} the screen contains must be in this list
+     * Every {@link BaseObject} the screen contains must be in this list
      * <p>
-     * The screen automatically calls {@link GameObject#init()}, {@link GameObject#update()}
-     * and {@link GameObject#clean()} on all contained objects when appropriate. This ensures
+     * The screen automatically calls {@link BaseObject#init()}, {@link BaseObject#update()}
+     * and {@link BaseObject#clean()} on all contained objects when appropriate. This ensures
      * all objects are initialised, updated and disposed of when expected. It also ensures all
      * type functionality inherited from OTIs are called.
      * <p>
      * The only things that should not be stored in here are flags, counters and other atomic
      * attributes.
      */
-    protected List<GameObject> objects;
+    protected List<BaseObject> objects;
 
     /**
-     * Calls {@link GameObject#init()} on all contained {@link GameObject}
+     * Calls {@link BaseObject#init()} on all contained {@link BaseObject}
      */
     public final void init() {
-        for (GameObject object : objects)
+        for (BaseObject object : objects)
             object.init();
     }
 
     /**
-     * Calls {@link GameObject#update()} on all contained {@link GameObject}
+     * Calls {@link BaseObject#update()} on all contained {@link BaseObject}
      */
     public final void update() {
-        for (GameObject object : objects)
+        for (BaseObject object : objects)
             object.update();
     }
 
     /**
-     * Calls {@link GameObject#clean()} on all contained {@link GameObject}
+     * Calls {@link BaseObject#clean()} on all contained {@link BaseObject}
      */
     public final void clean() {
-        for (GameObject object : objects)
+        for (BaseObject object : objects)
             object.clean();
     }
 

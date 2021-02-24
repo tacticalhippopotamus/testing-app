@@ -1,15 +1,15 @@
 package com.testing.oti;
 
-import com.testing.GameScreen;
+import com.testing.BaseScreen;
 
-public interface ITouchable {
+public interface OTITouchable {
     /**
      * all initialisation of related items needs to happen in here
      */
     void initTouchable();
 
     /**
-     * called every frame by the {@link GameScreen} containing this object
+     * called every frame by the {@link BaseScreen} containing this object
      */
     void updateTouchable();
 
