@@ -2,8 +2,13 @@ package com.testing;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseScreen implements Screen {
@@ -20,28 +25,40 @@ public abstract class BaseScreen implements Screen {
      */
     protected List<BaseObject> objects;
 
-    /**
-     * Calls {@link BaseObject#init()} on all contained {@link BaseObject}
-     */
-    public final void init() {
-        for (BaseObject object : objects)
-            object.init();
+    protected SpriteBatch batch;
+
+    protected Texture background;
+
+    protected Game game;
+
+    public BaseScreen(Game game) {
+        objects = new ArrayList<>();
+        batch = new SpriteBatch();
+        background = null;
+        this.game = game;
     }
 
     /**
      * Calls {@link BaseObject#update()} on all contained {@link BaseObject}
      */
     public final void update() {
+        if (!screenUpdate()) return;
+
+        ScreenUtils.clear(0, 0, 0, 1);
+
+        batch.begin();
+
+        if (background != null)
+            batch.draw(background, 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+
         for (BaseObject object : objects)
-            object.update();
+            object.update(batch);
+
+        batch.end();
     }
 
-    /**
-     * Calls {@link BaseObject#clean()} on all contained {@link BaseObject}
-     */
-    public final void clean() {
-        for (BaseObject object : objects)
-            object.clean();
+    protected boolean screenUpdate() {
+        return true;
     }
 
     /**
@@ -59,7 +76,7 @@ public abstract class BaseScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-
+        update();
     }
 
     /**
@@ -101,6 +118,9 @@ public abstract class BaseScreen implements Screen {
      */
     @Override
     public void dispose() {
-
+        background.dispose();
+        batch.dispose();
+        for(BaseObject o : objects)
+            o.dispose();
     }
 }
