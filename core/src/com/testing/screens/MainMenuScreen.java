@@ -8,6 +8,7 @@ import com.testing.objects.Button;
 
 public class MainMenuScreen extends BaseScreen {
     protected Button playButton;
+    protected Button settingsButton;
 
     public MainMenuScreen(Game game) {
         super(game);
@@ -17,7 +18,11 @@ public class MainMenuScreen extends BaseScreen {
                 Gdx.app.getGraphics().getHeight() / 2f - 100,
                 900, 200, "texture/main_menu_play_button");
 
+        settingsButton = new Button(
+                0,0,100,100, "texture/main_menu_settings_button");
+
         objects.add(playButton);
+        objects.add(settingsButton);
 
         background = new Texture("texture/main_menu_screen_bg.png");
     }
@@ -26,6 +31,11 @@ public class MainMenuScreen extends BaseScreen {
     public boolean screenUpdate() {
         if (playButton.isReleased()) {
             game.setScreen(new MainGameScreen(game));
+            return false;
+        }
+
+        if (settingsButton.isReleased()) {
+            game.setScreen(new OptionsScreen(game));
             return false;
         }
 
