@@ -15,8 +15,8 @@ public abstract class BaseScreen implements Screen {
     /**
      * Every {@link BaseObject} the screen contains must be in this list
      * <p>
-     * The screen automatically calls {@link BaseObject#init()}, {@link BaseObject#update()}
-     * and {@link BaseObject#clean()} on all contained objects when appropriate. This ensures
+     * The screen automatically calls {@link BaseObject#update(SpriteBatch)}
+     * and {@link BaseObject#dispose()} on all contained objects when appropriate. This ensures
      * all objects are initialised, updated and disposed of when expected. It also ensures all
      * type functionality inherited from OTIs are called.
      * <p>
@@ -53,7 +53,7 @@ public abstract class BaseScreen implements Screen {
     }
 
     /**
-     * Calls {@link BaseObject#update()} on all contained {@link BaseObject}
+     * Calls {@link BaseObject#update(SpriteBatch)} on all contained {@link BaseObject}
      */
     public final void update() {
         if (!screenUpdate()) return;

@@ -64,3 +64,11 @@ project(":core") {
         
     }
 }
+
+apply plugin: 'java'
+
+javadoc {
+    options.addBooleanOption('html5', true)
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
+}
