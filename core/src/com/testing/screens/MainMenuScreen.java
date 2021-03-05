@@ -15,11 +15,12 @@ public class MainMenuScreen extends BaseScreen {
 
         playButton = new Button(
                 Gdx.app.getGraphics().getWidth() / 2f - 450,
-                Gdx.app.getGraphics().getHeight() / 2f - 100,
-                900, 200, "texture/main_menu_play_button");
+                Gdx.app.getGraphics().getHeight() / 2f - 200,
+                900, 400, "texture/main_menu_play_button");
 
         settingsButton = new Button(
-                0,0,100,100, "texture/main_menu_settings_button");
+                Gdx.app.getGraphics().getWidth() - 200,0,
+                200,200, "texture/main_menu_settings_button");
 
         objects.add(playButton);
         objects.add(settingsButton);
