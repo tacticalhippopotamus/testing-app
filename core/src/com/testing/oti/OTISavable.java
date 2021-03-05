@@ -8,5 +8,8 @@ public interface OTISavable {
      */
     void updateSavable();
 
+    /**
+     * called when the object is no longer needed
+     */
     void disposeSavable();
 }

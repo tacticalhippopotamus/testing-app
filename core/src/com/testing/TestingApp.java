@@ -13,7 +13,9 @@ public class TestingApp extends Game {
 
     @Override
     public void create() {
+        // enable the debug log output
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        // enable catching of the android back key
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
 
         this.setScreen(new MainMenuScreen(this));

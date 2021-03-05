@@ -20,6 +20,19 @@ public class Button extends BaseObject implements OTITouchable, OTIDrawable {
 
     protected ButtonState state;
 
+    /**
+     * Constructor for the generic button object
+     *
+     * Textures for the button must be stored in the format:
+     * - [base path]_inactive.png for the texture to show when the button is inactive
+     * - [base path]_touched.png for the texture to show when the button is touched
+     *
+     * @param x bottom left x coordinate of the button
+     * @param y bottom left y coordinate of the button
+     * @param width width of the button
+     * @param height height of the button
+     * @param texturePathBase the base filename for all button textures, for example, "texture/my_button" would be the base for "texture/my_button_inactive.png" and "texture/my_button_touched.png"
+     */
     public Button(float x, float y, float width, float height, String texturePathBase) {
         // todo convert this to a texture atlas once we know how they work
         textures = new Texture[2];
@@ -53,6 +66,9 @@ public class Button extends BaseObject implements OTITouchable, OTIDrawable {
         sprite.draw(batch);
     }
 
+    /**
+     * called when the object is no longer needed
+     */
     @Override
     public void disposeDrawable() {
         textures[0].dispose();
@@ -77,11 +93,19 @@ public class Button extends BaseObject implements OTITouchable, OTIDrawable {
 
     }
 
+    /**
+     * called when the object is no longer needed
+     */
     @Override
     public void disposeTouchable() {
 
     }
 
+    /**
+     * Query this object to see if it was just touched and released
+     *
+     * @return whether the button has just been released
+     */
     public boolean isReleased() {
         return state.equals(ButtonState.RELEASED);
     }

@@ -8,5 +8,8 @@ public interface OTITouchable {
      */
     void updateTouchable();
 
+    /**
+     * called when the object is no longer needed
+     */
     void disposeTouchable();
 }

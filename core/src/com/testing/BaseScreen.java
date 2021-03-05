@@ -25,12 +25,26 @@ public abstract class BaseScreen implements Screen {
      */
     protected List<BaseObject> objects;
 
+    /**
+     * The {@link SpriteBatch} to draw all objects in the screen with
+     */
     protected SpriteBatch batch;
 
+    /**
+     * The background to show behind every object
+     */
     protected Texture background;
 
+    /**
+     * A reference to the main game to allow for screen switching
+     */
     protected Game game;
 
+    /**
+     * Initialises the screen with default, empty, values
+     *
+     * @param game a reference to the main game object
+     */
     public BaseScreen(Game game) {
         objects = new ArrayList<>();
         batch = new SpriteBatch();
@@ -57,6 +71,11 @@ public abstract class BaseScreen implements Screen {
         batch.end();
     }
 
+    /**
+     * Custom update method to be overwritten. Is called before anything else in the render loop
+     *
+     * @return return false if the screen is being switched this frame.
+     */
     protected boolean screenUpdate() {
         return true;
     }

@@ -11,5 +11,8 @@ public interface OTIDrawable {
      */
     void updateDrawable(SpriteBatch batch);
 
+    /**
+     * called when the object is no longer needed
+     */
     void disposeDrawable();
 }

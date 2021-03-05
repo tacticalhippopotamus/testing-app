@@ -14,7 +14,7 @@ import com.testing.oti.OTITouchable;
  */
 public abstract class BaseObject {
     /**
-     * Calls all update functions inherited from OTIs
+     * Calls {@link BaseObject#objectUpdate()} and all update methods inherited from OTIs
      *
      * @param batch The {@link SpriteBatch} to use for rendering
      */
@@ -31,10 +31,19 @@ public abstract class BaseObject {
             ((OTISavable) this).updateSavable();
     }
 
+    /**
+     * Custom update method to be overwritten. Is called before all OTI update methods
+     */
     protected void objectUpdate(){}
 
+    /**
+     * Calls {@link BaseObject#objectDispose()} and all dispose methods inherited from OTIs
+     */
     public final void dispose(){
-        // run all oti updates
+        // dispose this class
+        objectDispose();
+
+        // dispose all otis
         if (OTITouchable.class.isAssignableFrom(this.getClass()))
             ((OTITouchable) this).disposeTouchable();
         if (OTIDrawable.class.isAssignableFrom(this.getClass()))
@@ -43,5 +52,8 @@ public abstract class BaseObject {
             ((OTISavable) this).disposeSavable();
     }
 
+    /**
+     * Custom dispose method to be overwritten. Is called before all OTI dispose methods
+     */
     protected void objectDispose(){}
 }
