@@ -1,20 +1,63 @@
 package com.testing.objects;
 
-public class TextButton extends Button{
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.testing.BaseScreen;
+import com.testing.oti.OTIDrawable;
+
+public class TextButton extends Button implements OTIDrawable {
+    protected TextObject textObject;
+
     /**
-     * Constructor for the generic button object
-     * <p>
-     * Textures for the button must be stored in the format:
-     * - [base path]_inactive.png for the texture to show when the button is inactive
-     * - [base path]_touched.png for the texture to show when the button is touched
+     * Constructor for the text button object
      *
-     * @param x               bottom left x coordinate of the button
-     * @param y               bottom left y coordinate of the button
-     * @param width           width of the button
-     * @param height          height of the button
-     * @param texturePathBase the base filename for all button textures, for example, "texture/my_button" would be the base for "texture/my_button_inactive.png" and "texture/my_button_touched.png"
+     * @param x      bottom left x coordinate of the button
+     * @param y      bottom left y coordinate of the button
+     * @param width  width of the button
+     * @param height height of the button
+     * @param text   the text to show on the button
      */
-    public TextButton(float x, float y, float width, float height, String texturePathBase) {
-        super(x, y, width, height, texturePathBase);
+    public TextButton(float x, float y, float width, float height, String text) {
+        super(x, y, width, height);
+
+        //todo make a way to customise things like font and parameters
+        FreeTypeFontGenerator.FreeTypeFontParameter parameters =
+                new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameters.color = new Color(0xf600ffff);
+        parameters.borderColor = new Color(0x303030ff);
+        parameters.borderWidth = 3f;
+
+        textObject = new TextObject(x, y, width, height, "font/OfficeCodePro-Light.otf",
+                text, parameters);
+    }
+
+    /**
+     * called every frame by the {@link BaseScreen} containing this object
+     *
+     * @param batch The {@link SpriteBatch} to use for rendering
+     */
+    @Override
+    public void updateDrawable(SpriteBatch batch) {
+        //todo there is probably a faster way of doing this that isn't just making a new font
+        if (state == ButtonState.TOUCHED) {
+            FreeTypeFontGenerator.FreeTypeFontParameter parameters =
+                    new FreeTypeFontGenerator.FreeTypeFontParameter();
+            parameters.color = new Color(0x900098ff);
+            parameters.borderColor = new Color(0x303030ff);
+            parameters.borderWidth = 3f;
+
+            textObject.setFontParameters(parameters);
+        }
+
+        textObject.update(batch);
+    }
+
+    /**
+     * called when the object is no longer needed
+     */
+    @Override
+    public void disposeDrawable() {
+        textObject.dispose();
     }
 }
