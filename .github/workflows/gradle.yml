@@ -25,7 +25,6 @@ jobs:
 
     - name: Setup Android build environment
       uses: android-actions/setup-android@v2
-    - name: Fetch natives
-      run: ./gradlew fetchNatives
+
     - name: Build whole project with gradle
       run: ./gradlew build
