@@ -31,7 +31,7 @@ public class MainMenuScreen extends BaseScreen {
     @Override
     public boolean screenUpdate() {
         if (playButton.isReleased()) {
-            game.setScreen(new MainGameScreen(game));
+            game.setScreen(new LevelSelectScreen(game));
             this.dispose();
             return false;
         }
