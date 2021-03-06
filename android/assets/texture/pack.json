@@ -27,7 +27,7 @@
   fast: false,
   debug: false,
   combineSubdirectories: false,
-  flattenPaths: true,
+  flattenPaths: false,
   premultiplyAlpha: false,
   useIndexes: false,
   limitMemory: false,

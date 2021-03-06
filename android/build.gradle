@@ -1,3 +1,6 @@
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+project.ext.texturePacker = ["android/assets/texture", "android/assets/pack", "pack"]
+
 android {
     buildToolsVersion "30.0.3"
     compileSdkVersion 30
@@ -87,6 +90,16 @@ task run(type: Exec) {
 
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.testing/com.testing.AndroidLauncher'
+}
+
+// Add a new task that packs the textures for you
+task packTextures {
+    doLast {
+        if (project.ext.has('texturePacker')) {
+            logger.info "Calling TexturePacker: " + texturePacker
+            TexturePacker.process(texturePacker[0], texturePacker[1], texturePacker[2])
+        }
+    }
 }
 
 eclipse.project.name = appName + "-android"
