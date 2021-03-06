@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.testing.BaseScreen;
+import com.testing.TestingApp;
 import com.testing.objects.Button;
 import com.testing.objects.ImageButton;
 import com.testing.objects.TextButton;
@@ -12,13 +13,14 @@ public class MainMenuScreen extends BaseScreen {
     protected Button playButton;
     protected Button settingsButton;
 
-    public MainMenuScreen(Game game) {
+    public MainMenuScreen(TestingApp game) {
         super(game);
 
         playButton = new TextButton(
                 Gdx.app.getGraphics().getWidth() / 2f - 450,
                 Gdx.app.getGraphics().getHeight() / 2f - 200,
-                900, 400, "start");
+                900, 400, "start",
+                game.font256, game.font256Alt);
 
         settingsButton = new ImageButton(
                 Gdx.app.getGraphics().getWidth() - 200, 0,

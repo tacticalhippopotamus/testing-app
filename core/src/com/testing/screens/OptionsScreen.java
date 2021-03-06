@@ -5,10 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.testing.BaseScreen;
+import com.testing.TestingApp;
 
 public class OptionsScreen extends BaseScreen {
 
-    public OptionsScreen(Game game) {
+    public OptionsScreen(TestingApp game) {
         super(game);
 
         background = new Texture("texture/options_screen_bg.png");

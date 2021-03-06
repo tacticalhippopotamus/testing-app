@@ -1,6 +1,7 @@
 package com.testing.objects;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.testing.BaseScreen;
@@ -8,6 +9,8 @@ import com.testing.oti.OTIDrawable;
 
 public class TextButton extends Button implements OTIDrawable {
     protected TextObject textObject;
+    protected BitmapFont font;
+    protected BitmapFont fontAlt;
 
     /**
      * Constructor for the text button object
@@ -18,18 +21,14 @@ public class TextButton extends Button implements OTIDrawable {
      * @param height height of the button
      * @param text   the text to show on the button
      */
-    public TextButton(float x, float y, float width, float height, String text) {
+    public TextButton(float x, float y, float width, float height, String text,
+                      BitmapFont font, BitmapFont fontAlt) {
         super(x, y, width, height);
 
-        //todo make a way to customise things like font and parameters
-        FreeTypeFontGenerator.FreeTypeFontParameter parameters =
-                new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameters.color = new Color(0xf600ffff);
-        parameters.borderColor = new Color(0x303030ff);
-        parameters.borderWidth = 3f;
+        textObject = new TextObject(x, y, width, height, font, text);
 
-        textObject = new TextObject(x, y, width, height, "font/OfficeCodePro-Light.otf",
-                text, parameters);
+        this.font = font;
+        this.fontAlt = fontAlt;
     }
 
     /**
@@ -39,16 +38,8 @@ public class TextButton extends Button implements OTIDrawable {
      */
     @Override
     public void updateDrawable(SpriteBatch batch) {
-        //todo there is probably a faster way of doing this that isn't just making a new font
-        if (state == ButtonState.TOUCHED) {
-            FreeTypeFontGenerator.FreeTypeFontParameter parameters =
-                    new FreeTypeFontGenerator.FreeTypeFontParameter();
-            parameters.color = new Color(0x900098ff);
-            parameters.borderColor = new Color(0x303030ff);
-            parameters.borderWidth = 3f;
-
-            textObject.setFontParameters(parameters);
-        }
+        if (state == ButtonState.TOUCHED) textObject.setFont(fontAlt);
+        else textObject.setFont(font);
 
         textObject.update(batch);
     }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.testing.BaseScreen;
+import com.testing.TestingApp;
 import com.testing.objects.TextButton;
 
 public class LevelSelectScreen extends BaseScreen {
@@ -15,7 +16,7 @@ public class LevelSelectScreen extends BaseScreen {
      *
      * @param game a reference to the main game object
      */
-    public LevelSelectScreen(Game game) {
+    public LevelSelectScreen(TestingApp game) {
         super(game);
 
         background = new Texture("texture/level_select_screen_bg.png");
@@ -47,7 +48,8 @@ public class LevelSelectScreen extends BaseScreen {
                             (i / 5) * (yGap + buttonHeight)) + buttonHeight / 4 - yOddYOffset,
                     buttonWidth,
                     buttonHeight / 2,
-                    String.valueOf((char) (((int) 'a') + i)));
+                    String.valueOf((char) (((int) 'a') + i)),
+                    game.font72, game.font72Alt);
             objects.add(textButtons[i]);
         }
 
@@ -55,7 +57,8 @@ public class LevelSelectScreen extends BaseScreen {
         textButtons[25] = new TextButton(
                 0.426f * Gdx.graphics.getWidth(),
                 0.145f * Gdx.graphics.getHeight() + buttonHeight / 4,
-                buttonWidth, buttonHeight / 2, "z");
+                buttonWidth, buttonHeight / 2, "z",
+                game.font72, game.font72Alt);
         objects.add(textButtons[25]);
     }
 

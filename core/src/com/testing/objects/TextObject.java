@@ -17,6 +17,7 @@ public class TextObject extends BaseObject implements OTIDrawable {
     protected String fontPath;
     protected Rectangle bounds;
     protected float fontScale;
+    protected boolean isGivenExternalFont;
     FreeTypeFontGenerator.FreeTypeFontParameter fontParameters;
 
     /**
@@ -38,6 +39,9 @@ public class TextObject extends BaseObject implements OTIDrawable {
         this.fontParameters = fontParameters;
         this.fontScale = 1f;
 
+        isGivenExternalFont = false;
+
+        scaleFont();
         regenFont();
     }
 
@@ -56,6 +60,17 @@ public class TextObject extends BaseObject implements OTIDrawable {
                 new FreeTypeFontGenerator.FreeTypeFontParameter());
     }
 
+    public TextObject(float x, float y, float width, float height, BitmapFont font, String text) {
+        this.bounds = new Rectangle(x, y, width, height);
+        this.text = text;
+        this.fontScale = 1f;
+        this.font = font;
+
+        isGivenExternalFont = true;
+
+        scaleFont();
+    }
+
     /**
      * called every frame by the {@link BaseScreen} containing this object
      *
@@ -63,9 +78,12 @@ public class TextObject extends BaseObject implements OTIDrawable {
      */
     @Override
     public void updateDrawable(SpriteBatch batch) {
+        float oldScale = font.getScaleX();
+        font.getData().setScale(fontScale);
         font.draw(batch, text,
                 bounds.x + bounds.width / 2 - (layout.width * fontScale) / 2,
                 bounds.y + (layout.height * fontScale) / 2 + bounds.height / 2);
+        font.getData().setScale(oldScale);
     }
 
     /**
@@ -73,7 +91,7 @@ public class TextObject extends BaseObject implements OTIDrawable {
      */
     @Override
     public void disposeDrawable() {
-        font.dispose();
+        if (!isGivenExternalFont) font.dispose();
     }
 
     /**
@@ -84,8 +102,6 @@ public class TextObject extends BaseObject implements OTIDrawable {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
         fontParameters.size = 72;//(int) (bounds.height);
         font = generator.generateFont(fontParameters);
-        layout = new GlyphLayout();
-        layout.setText(font, text);
         generator.dispose();
 
         // todo find a way to reimplement this
@@ -98,10 +114,13 @@ public class TextObject extends BaseObject implements OTIDrawable {
         //    layout = new GlyphLayout();
         //    layout.setText(font, text);
         //}
+    }
 
+    protected void scaleFont() {
+        layout = new GlyphLayout();
+        layout.setText(font, text);
         // scale the font to fill the area
         fontScale = Math.min(bounds.width / layout.width, bounds.height / layout.height);
-        font.getData().setScale(fontScale);
     }
 
     /**
@@ -111,7 +130,9 @@ public class TextObject extends BaseObject implements OTIDrawable {
      */
     public void setText(String newText) {
         text = newText;
-        regenFont();
+        if (!isGivenExternalFont)
+            regenFont();
+        scaleFont();
     }
 
     /**
@@ -121,7 +142,19 @@ public class TextObject extends BaseObject implements OTIDrawable {
      */
     public void setFont(String newFontPath) {
         fontPath = newFontPath;
-        regenFont();
+        if (!isGivenExternalFont)
+            regenFont();
+        scaleFont();
+    }
+
+    /**
+     * set the display font
+     *
+     * @param newFont new font
+     */
+    public void setFont(BitmapFont newFont) {
+        font = newFont;
+        scaleFont();
     }
 
     /**
@@ -131,6 +164,8 @@ public class TextObject extends BaseObject implements OTIDrawable {
      */
     public void setFontParameters(FreeTypeFontGenerator.FreeTypeFontParameter newParameters) {
         fontParameters = newParameters;
-        regenFont();
+        if (!isGivenExternalFont)
+            regenFont();
+        scaleFont();
     }
 }
