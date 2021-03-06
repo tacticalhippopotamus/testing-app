@@ -32,11 +32,13 @@ public class MainMenuScreen extends BaseScreen {
     public boolean screenUpdate() {
         if (playButton.isReleased()) {
             game.setScreen(new MainGameScreen(game));
+            this.dispose();
             return false;
         }
 
         if (settingsButton.isReleased()) {
             game.setScreen(new OptionsScreen(game));
+            this.dispose();
             return false;
         }
 
