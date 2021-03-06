@@ -1,19 +1,18 @@
 package com.testing.oti;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.testing.BaseScreen;
 
 public interface OTIDrawable {
     /**
-     * all initialisation of related items needs to happen in here
-     */
-    void initDrawable();
-    /**
      * called every frame by the {@link BaseScreen} containing this object
+     *
+     * @param batch The {@link SpriteBatch} to use for rendering
      */
-    void updateDrawable();
+    void updateDrawable(SpriteBatch batch);
 
     /**
-     * all cleanup of drawing items needs to happen in here
+     * called when the object is no longer needed
      */
-    void cleanDrawable();
+    void disposeDrawable();
 }

@@ -2,16 +2,21 @@ package com.testing;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseScreen implements Screen {
     /**
      * Every {@link BaseObject} the screen contains must be in this list
      * <p>
-     * The screen automatically calls {@link BaseObject#init()}, {@link BaseObject#update()}
-     * and {@link BaseObject#clean()} on all contained objects when appropriate. This ensures
+     * The screen automatically calls {@link BaseObject#update(SpriteBatch)}
+     * and {@link BaseObject#dispose()} on all contained objects when appropriate. This ensures
      * all objects are initialised, updated and disposed of when expected. It also ensures all
      * type functionality inherited from OTIs are called.
      * <p>
@@ -21,27 +26,58 @@ public abstract class BaseScreen implements Screen {
     protected List<BaseObject> objects;
 
     /**
-     * Calls {@link BaseObject#init()} on all contained {@link BaseObject}
+     * The {@link SpriteBatch} to draw all objects in the screen with
      */
-    public final void init() {
-        for (BaseObject object : objects)
-            object.init();
+    protected SpriteBatch batch;
+
+    /**
+     * The background to show behind every object
+     */
+    protected Texture background;
+
+    /**
+     * A reference to the main game to allow for screen switching
+     */
+    protected Game game;
+
+    /**
+     * Initialises the screen with default, empty, values
+     *
+     * @param game a reference to the main game object
+     */
+    public BaseScreen(Game game) {
+        objects = new ArrayList<>();
+        batch = new SpriteBatch();
+        background = null;
+        this.game = game;
     }
 
     /**
-     * Calls {@link BaseObject#update()} on all contained {@link BaseObject}
+     * Calls {@link BaseObject#update(SpriteBatch)} on all contained {@link BaseObject}
      */
     public final void update() {
+        if (!screenUpdate()) return;
+
+        ScreenUtils.clear(0, 0, 0, 1);
+
+        batch.begin();
+
+        if (background != null)
+            batch.draw(background, 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+
         for (BaseObject object : objects)
-            object.update();
+            object.update(batch);
+
+        batch.end();
     }
 
     /**
-     * Calls {@link BaseObject#clean()} on all contained {@link BaseObject}
+     * Custom update method to be overwritten. Is called before anything else in the render loop
+     *
+     * @return return false if the screen is being switched this frame.
      */
-    public final void clean() {
-        for (BaseObject object : objects)
-            object.clean();
+    protected boolean screenUpdate() {
+        return true;
     }
 
     /**
@@ -59,7 +95,7 @@ public abstract class BaseScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-
+        update();
     }
 
     /**
@@ -101,6 +137,9 @@ public abstract class BaseScreen implements Screen {
      */
     @Override
     public void dispose() {
-
+        background.dispose();
+        batch.dispose();
+        for(BaseObject o : objects)
+            o.dispose();
     }
 }

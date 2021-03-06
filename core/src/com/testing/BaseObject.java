@@ -1,5 +1,6 @@
 package com.testing;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.testing.oti.OTIDrawable;
 import com.testing.oti.OTISavable;
 import com.testing.oti.OTITouchable;
@@ -13,38 +14,46 @@ import com.testing.oti.OTITouchable;
  */
 public abstract class BaseObject {
     /**
-     * Calls all init functions inherited from OTIs
+     * Calls {@link BaseObject#objectUpdate()} and all update methods inherited from OTIs
+     *
+     * @param batch The {@link SpriteBatch} to use for rendering
      */
-    public final void init() {
-        if (OTIDrawable.class.isAssignableFrom(this.getClass()))
-            ((OTIDrawable) this).initDrawable();
-        if (OTISavable.class.isAssignableFrom(this.getClass()))
-            ((OTISavable) this).initSavable();
-        if (OTITouchable.class.isAssignableFrom(this.getClass()))
-            ((OTITouchable) this).initTouchable();
-    }
+    public final void update(SpriteBatch batch) {
+        // run any updates specific to the inherited class
+        objectUpdate();
 
-    /**
-     * Calls all update functions inherited from OTIs
-     */
-    public final void update() {
-        if (OTIDrawable.class.isAssignableFrom(this.getClass()))
-            ((OTIDrawable) this).updateDrawable();
-        if (OTISavable.class.isAssignableFrom(this.getClass()))
-            ((OTISavable) this).updateSavable();
+        // run all oti updates
         if (OTITouchable.class.isAssignableFrom(this.getClass()))
             ((OTITouchable) this).updateTouchable();
+        if (OTIDrawable.class.isAssignableFrom(this.getClass()))
+            ((OTIDrawable) this).updateDrawable(batch);
+        if (OTISavable.class.isAssignableFrom(this.getClass()))
+            ((OTISavable) this).updateSavable();
     }
 
     /**
-     * Calls all clean functions inherited from OTIs
+     * Custom update method to be overwritten. Is called before all OTI update methods
      */
-    public final void clean() {
-        if (OTIDrawable.class.isAssignableFrom(this.getClass()))
-            ((OTIDrawable) this).cleanDrawable();
-        if (OTISavable.class.isAssignableFrom(this.getClass()))
-            ((OTISavable) this).cleanSavable();
+    protected void objectUpdate(){}
+
+    /**
+     * Calls {@link BaseObject#objectDispose()} and all dispose methods inherited from OTIs
+     */
+    public final void dispose(){
+        // dispose this class
+        objectDispose();
+
+        // dispose all otis
         if (OTITouchable.class.isAssignableFrom(this.getClass()))
-            ((OTITouchable) this).cleanTouchable();
+            ((OTITouchable) this).disposeTouchable();
+        if (OTIDrawable.class.isAssignableFrom(this.getClass()))
+            ((OTIDrawable) this).disposeDrawable();
+        if (OTISavable.class.isAssignableFrom(this.getClass()))
+            ((OTISavable) this).disposeSavable();
     }
+
+    /**
+     * Custom dispose method to be overwritten. Is called before all OTI dispose methods
+     */
+    protected void objectDispose(){}
 }
