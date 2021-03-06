@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.testing.BaseScreen;
 import com.testing.objects.Button;
+import com.testing.objects.ImageButton;
+import com.testing.objects.TextButton;
 
 public class MainMenuScreen extends BaseScreen {
     protected Button playButton;
@@ -13,14 +15,14 @@ public class MainMenuScreen extends BaseScreen {
     public MainMenuScreen(Game game) {
         super(game);
 
-        playButton = new Button(
+        playButton = new TextButton(
                 Gdx.app.getGraphics().getWidth() / 2f - 450,
                 Gdx.app.getGraphics().getHeight() / 2f - 200,
-                900, 400, "texture/main_menu_play_button");
+                900, 400, "start");
 
-        settingsButton = new Button(
-                Gdx.app.getGraphics().getWidth() - 200,0,
-                200,200, "texture/main_menu_settings_button");
+        settingsButton = new ImageButton(
+                Gdx.app.getGraphics().getWidth() - 200, 0,
+                200, 200, "texture/main_menu_settings_button");
 
         objects.add(playButton);
         objects.add(settingsButton);
