@@ -1,9 +1,7 @@
 package com.testing.objects;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.testing.BaseScreen;
 import com.testing.oti.OTIDrawable;
 
@@ -15,11 +13,13 @@ public class TextButton extends Button implements OTIDrawable {
     /**
      * Constructor for the text button object
      *
-     * @param x      bottom left x coordinate of the button
-     * @param y      bottom left y coordinate of the button
-     * @param width  width of the button
-     * @param height height of the button
-     * @param text   the text to show on the button
+     * @param x       bottom left x coordinate of the button
+     * @param y       bottom left y coordinate of the button
+     * @param width   width of the button
+     * @param height  height of the button
+     * @param text    the text to show on the button
+     * @param font    the font to use when the button is inactive
+     * @param fontAlt the font to use when the button is touched
      */
     public TextButton(float x, float y, float width, float height, String text,
                       BitmapFont font, BitmapFont fontAlt) {

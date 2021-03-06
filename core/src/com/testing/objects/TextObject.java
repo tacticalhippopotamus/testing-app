@@ -60,6 +60,14 @@ public class TextObject extends BaseObject implements OTIDrawable {
                 new FreeTypeFontGenerator.FreeTypeFontParameter());
     }
 
+    /**
+     * @param x      the bottom left x coordinate of the object
+     * @param y      the bottom left y coordinate of the object
+     * @param width  the width of the object
+     * @param height the height of the object
+     * @param font   the external font to use
+     * @param text   the text to display
+     */
     public TextObject(float x, float y, float width, float height, BitmapFont font, String text) {
         this.bounds = new Rectangle(x, y, width, height);
         this.text = text;
@@ -116,6 +124,9 @@ public class TextObject extends BaseObject implements OTIDrawable {
         //}
     }
 
+    /**
+     * scale the font to fit in the bounds
+     */
     protected void scaleFont() {
         layout = new GlyphLayout();
         layout.setText(font, text);

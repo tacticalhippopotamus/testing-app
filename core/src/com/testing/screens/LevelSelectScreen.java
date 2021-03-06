@@ -23,6 +23,7 @@ public class LevelSelectScreen extends BaseScreen {
 
         textButtons = new TextButton[26];
 
+        // todo make this less of a mess
         // place all buttons (layout in texture/level_select_screen_bg_layout.png)
         float buttonWidth = 0.156f * Gdx.graphics.getWidth();
         float buttonHeight = 0.0875f * Gdx.graphics.getHeight();

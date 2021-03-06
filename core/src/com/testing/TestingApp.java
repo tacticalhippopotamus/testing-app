@@ -42,6 +42,9 @@ public class TestingApp extends Game {
 
     }
 
+    /**
+     * generate all fonts to be used in the game
+     */
     protected void generateFonts(){
 
         FreeTypeFontGenerator generator =
