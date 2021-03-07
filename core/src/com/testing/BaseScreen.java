@@ -38,14 +38,14 @@ public abstract class BaseScreen implements Screen {
     /**
      * A reference to the main game to allow for screen switching
      */
-    protected Game game;
+    protected TestingApp game;
 
     /**
      * Initialises the screen with default, empty, values
      *
      * @param game a reference to the main game object
      */
-    public BaseScreen(Game game) {
+    public BaseScreen(TestingApp game) {
         objects = new ArrayList<>();
         batch = new SpriteBatch();
         background = null;
