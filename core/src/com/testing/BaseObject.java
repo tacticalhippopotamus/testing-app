@@ -3,6 +3,7 @@ package com.testing;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.testing.oti.OTIDrawable;
 import com.testing.oti.OTISavable;
+import com.testing.oti.OTITexture;
 import com.testing.oti.OTITouchable;
 
 /**
@@ -50,6 +51,8 @@ public abstract class BaseObject {
             ((OTIDrawable) this).disposeDrawable();
         if (OTISavable.class.isAssignableFrom(this.getClass()))
             ((OTISavable) this).disposeSavable();
+        if (OTITexture.class.isAssignableFrom(this.getClass()))
+            ((OTITexture) this).disposeTexture();
     }
 
     /**
