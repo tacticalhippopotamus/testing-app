@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.testing.BaseScreen;
+import com.testing.FontManager;
 import com.testing.TestingApp;
 import com.testing.objects.Button;
 import com.testing.objects.ImageButton;
@@ -20,7 +21,7 @@ public class MainMenuScreen extends BaseScreen {
                 Gdx.app.getGraphics().getWidth() / 2f - 450,
                 Gdx.app.getGraphics().getHeight() / 2f - 200,
                 900, 400, "start",
-                game.font256, game.font256Alt);
+                FontManager.font256, FontManager.font256Alt);
 
         settingsButton = new ImageButton(
                 Gdx.app.getGraphics().getWidth() - 200, 0,
