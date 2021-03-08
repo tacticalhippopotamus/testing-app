@@ -1,13 +1,12 @@
 package com.testing.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.testing.BaseScreen;
 import com.testing.FontManager;
 import com.testing.TestingApp;
 import com.testing.objects.TextButton;
+import com.testing.objects.TextureObject;
 
 public class LevelSelectScreen extends BaseScreen {
     protected TextButton[] textButtons;
@@ -20,7 +19,7 @@ public class LevelSelectScreen extends BaseScreen {
     public LevelSelectScreen(TestingApp game) {
         super(game);
 
-        background = new Texture("texture/screen_bg/level_select_screen_bg.png");
+        background = new TextureObject("screen_bg/level_select_screen_bg");
 
         textButtons = new TextButton[26];
 

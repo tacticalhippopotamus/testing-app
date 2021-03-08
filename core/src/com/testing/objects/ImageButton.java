@@ -6,7 +6,7 @@ import com.testing.BaseScreen;
 import com.testing.oti.OTIDrawable;
 
 public class ImageButton extends Button implements OTIDrawable {
-    protected Texture[] textures;
+    protected TextureObject[] textures;
 
     /**
      * Constructor for the image button object
@@ -26,9 +26,9 @@ public class ImageButton extends Button implements OTIDrawable {
     public ImageButton(float x, float y, float width, float height, String texturePathBase) {
         super(x, y, width, height);
 
-        textures = new Texture[2];
-        textures[0] = new Texture(texturePathBase + "_inactive.png");
-        textures[1] = new Texture(texturePathBase + "_touched.png");
+        textures = new TextureObject[2];
+        textures[0] = new TextureObject(texturePathBase + "_inactive");
+        textures[1] = new TextureObject(texturePathBase + "_touched");
     }
 
     /**
@@ -39,10 +39,10 @@ public class ImageButton extends Button implements OTIDrawable {
     @Override
     public void updateDrawable(SpriteBatch batch) {
         if (state == ButtonState.TOUCHED || state == ButtonState.RELEASED)
-            batch.draw(textures[1], bounds.getX(), bounds.getY(),
+            batch.draw(textures[1].getRegion(), bounds.getX(), bounds.getY(),
                     bounds.getWidth(), bounds.getHeight());
         else
-            batch.draw(textures[0], bounds.getX(), bounds.getY(),
+            batch.draw(textures[0].getRegion(), bounds.getX(), bounds.getY(),
                     bounds.getWidth(), bounds.getHeight());
     }
 
@@ -51,7 +51,7 @@ public class ImageButton extends Button implements OTIDrawable {
      */
     @Override
     public void disposeDrawable() {
-        for (Texture t : textures)
+        for (TextureObject t : textures)
             t.dispose();
     }
 }

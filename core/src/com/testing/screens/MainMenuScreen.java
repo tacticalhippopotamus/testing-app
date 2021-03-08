@@ -1,14 +1,13 @@
 package com.testing.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.testing.BaseScreen;
 import com.testing.FontManager;
 import com.testing.TestingApp;
 import com.testing.objects.Button;
 import com.testing.objects.ImageButton;
 import com.testing.objects.TextButton;
+import com.testing.objects.TextureObject;
 
 public class MainMenuScreen extends BaseScreen {
     protected Button playButton;
@@ -25,12 +24,12 @@ public class MainMenuScreen extends BaseScreen {
 
         settingsButton = new ImageButton(
                 Gdx.app.getGraphics().getWidth() - 200, 0,
-                200, 200, "texture/buttons/main_menu_settings_button");
+                200, 200, "buttons/main_menu_settings_button");
 
         objects.add(playButton);
         objects.add(settingsButton);
 
-        background = new Texture("texture/screen_bg/main_menu_screen_bg.png");
+        background = new TextureObject("screen_bg/main_menu_screen_bg");
     }
 
     @Override

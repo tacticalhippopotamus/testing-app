@@ -48,7 +48,7 @@ public class TextureObject extends BaseObject implements OTITexture {
      *
      * @param path name of the TextureRegion
      */
-    TextureObject(String path) {
+    public TextureObject(String path) {
         this.path = path;
         atlas = getAtlas();
     }
@@ -98,8 +98,8 @@ public class TextureObject extends BaseObject implements OTITexture {
      */
     @Override
     public void disposeTexture() {
-        /* TODO: find a more granular wy of doing this */
-        atlas.dispose();
+        /* FIXME: See https://github.com/tacticalhippopotamus/testing-app/issues/24 */
+//        atlas.dispose();
     }
 
 }
