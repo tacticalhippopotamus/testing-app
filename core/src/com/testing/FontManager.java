@@ -7,31 +7,36 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class FontManager {
     public static BitmapFont fontTest;
-
     public static BitmapFont font72;
     public static BitmapFont font72Alt;
-
     public static BitmapFont font256;
     public static BitmapFont font256Alt;
 
+    /**
+     * generate all global fonts
+     */
     public static void generateFonts() {
         FreeTypeFontGenerator generator =
                 new FreeTypeFontGenerator(Gdx.files.internal("font/OfficeCodePro-Light.otf"));
 
-        fontTest = generateGenericFont(generator,
-                72, 0x00ff00ff, 0xffff00ff, 4f);
-
+        fontTest = generateGenericFont(generator, 72, 0x00ff00ff, 0xffff00ff, 4f);
         font72 = generateGenericFont(generator, 72, 0xf600ffff, 0x303030ff, 3f);
         font72Alt = generateGenericFont(generator, 72, 0x900098ff, 0x303030ff, 3f);
-
         font256 = generateGenericFont(generator, 256, 0xf600ffff, 0x303030ff, 3f);
         font256Alt = generateGenericFont(generator, 256, 0x900098ff, 0x303030ff, 3f);
 
         generator.dispose();
     }
 
+    /**
+     * dispose all fonts
+     */
     public static void disposeFonts() {
         fontTest.dispose();
+        font72.dispose();
+        font72Alt.dispose();
+        font256.dispose();
+        font256Alt.dispose();
     }
 
     /**
