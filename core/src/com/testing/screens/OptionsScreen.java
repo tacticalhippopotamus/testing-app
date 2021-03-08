@@ -12,7 +12,7 @@ public class OptionsScreen extends BaseScreen {
     public OptionsScreen(TestingApp game) {
         super(game);
 
-        background = new Texture("texture/options_screen_bg.png");
+        background = new Texture("texture/screen_bg/options_screen_bg.png");
     }
 
     /**

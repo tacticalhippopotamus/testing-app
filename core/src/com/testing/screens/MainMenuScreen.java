@@ -25,12 +25,12 @@ public class MainMenuScreen extends BaseScreen {
 
         settingsButton = new ImageButton(
                 Gdx.app.getGraphics().getWidth() - 200, 0,
-                200, 200, "texture/main_menu_settings_button");
+                200, 200, "texture/buttons/main_menu_settings_button");
 
         objects.add(playButton);
         objects.add(settingsButton);
 
-        background = new Texture("texture/main_menu_screen_bg.png");
+        background = new Texture("texture/screen_bg/main_menu_screen_bg.png");
     }
 
     @Override

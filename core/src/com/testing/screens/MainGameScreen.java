@@ -13,7 +13,7 @@ public class MainGameScreen extends BaseScreen {
     public MainGameScreen(TestingApp game) {
         super(game);
 
-        background = new Texture("texture/main_game_screen_bg.png");
+        background = new Texture("texture/screen_bg/main_game_screen_bg.png");
     }
 
     /**

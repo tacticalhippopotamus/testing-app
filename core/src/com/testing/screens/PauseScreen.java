@@ -10,6 +10,6 @@ public class PauseScreen extends BaseScreen {
     public PauseScreen(TestingApp game) {
         super(game);
 
-        background = new Texture("texture/pause_screen_bg.png");
+        background = new Texture("texture/screen_bg/pause_screen_bg.png");
     }
 }

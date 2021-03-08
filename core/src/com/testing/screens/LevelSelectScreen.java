@@ -20,7 +20,7 @@ public class LevelSelectScreen extends BaseScreen {
     public LevelSelectScreen(TestingApp game) {
         super(game);
 
-        background = new Texture("texture/level_select_screen_bg.png");
+        background = new Texture("texture/screen_bg/level_select_screen_bg.png");
 
         textButtons = new TextButton[26];
 
