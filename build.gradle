@@ -1,5 +1,6 @@
+
 buildscript {
-    
+
 
     repositories {
         mavenLocal()
@@ -11,6 +12,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath "com.badlogicgames.gdx:gdx-tools:1.9.14"
 
     }
 }
@@ -60,17 +62,18 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
         
+
     }
 }
 
 project(":core") {
     apply plugin: "java-library"
 
-
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
 
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
     }
 }
 
@@ -81,3 +84,4 @@ javadoc {
     source = sourceSets.main.allJava
     classpath = configurations.compile
 }
+
