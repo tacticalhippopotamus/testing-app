@@ -7,7 +7,6 @@ import com.testing.oti.OTIDrawable;
 
 public class ImageButton extends Button implements OTIDrawable {
     protected Texture[] textures;
-    protected Texture currentTexture;
 
     /**
      * Constructor for the image button object
@@ -30,9 +29,6 @@ public class ImageButton extends Button implements OTIDrawable {
         textures = new Texture[2];
         textures[0] = new Texture(texturePathBase + "_inactive.png");
         textures[1] = new Texture(texturePathBase + "_touched.png");
-
-        //sprite = new Sprite(textures[0]);
-        currentTexture = textures[0];
     }
 
     /**
@@ -42,14 +38,12 @@ public class ImageButton extends Button implements OTIDrawable {
      */
     @Override
     public void updateDrawable(SpriteBatch batch) {
-        if (state == ButtonState.TOUCHED) {
-            currentTexture = textures[1];
-        } else {
-            currentTexture = textures[0];
-        }
-
-        batch.draw(currentTexture, bounds.getX(), bounds.getY(),
-                bounds.getWidth(), bounds.getHeight());
+        if (state == ButtonState.TOUCHED || state == ButtonState.RELEASED)
+            batch.draw(textures[1], bounds.getX(), bounds.getY(),
+                    bounds.getWidth(), bounds.getHeight());
+        else
+            batch.draw(textures[0], bounds.getX(), bounds.getY(),
+                    bounds.getWidth(), bounds.getHeight());
     }
 
     /**

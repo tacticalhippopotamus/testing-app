@@ -38,8 +38,10 @@ public class TextButton extends Button implements OTIDrawable {
      */
     @Override
     public void updateDrawable(SpriteBatch batch) {
-        if (state == ButtonState.TOUCHED) textObject.setFont(fontAlt);
-        else textObject.setFont(font);
+        if (state == ButtonState.TOUCHED || state == ButtonState.RELEASED)
+            textObject.setFont(fontAlt);
+        else
+            textObject.setFont(font);
 
         textObject.update(batch);
     }
