@@ -4,9 +4,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.testing.objects.TextureObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public abstract class BaseScreen implements Screen {
     /**
      * The background to show behind every object
      */
-    protected Texture background;
+    protected TextureObject background;
 
     /**
      * A reference to the main game to allow for screen switching
@@ -63,7 +63,7 @@ public abstract class BaseScreen implements Screen {
         batch.begin();
 
         if (background != null)
-            batch.draw(background, 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+            batch.draw(background.getRegion(), 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
 
         for (BaseObject object : objects)
             object.update(batch);

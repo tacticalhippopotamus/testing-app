@@ -1,18 +1,17 @@
 package com.testing.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.testing.BaseScreen;
 import com.testing.TestingApp;
+import com.testing.objects.TextureObject;
 
 public class OptionsScreen extends BaseScreen {
 
     public OptionsScreen(TestingApp game) {
         super(game);
 
-        background = new Texture("texture/options_screen_bg.png");
+        background = new TextureObject("screen_bg/options_screen_bg");
     }
 
     /**
