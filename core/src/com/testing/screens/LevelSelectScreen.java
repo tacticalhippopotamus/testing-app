@@ -64,25 +64,17 @@ public class LevelSelectScreen extends BaseScreen {
     }
 
     /**
-     * Called when the screen should render itself.
-     *
-     * @param delta The time in seconds since the last render.
-     */
-    @Override
-    public void render(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK))
-            game.setScreen(new MainMenuScreen(game));
-
-        super.render(delta);
-    }
-
-    /**
      * Custom update method to be overwritten. Is called before anything else in the render loop
      *
      * @return return false if the screen is being switched this frame.
      */
     @Override
     protected boolean screenUpdate() {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new MainMenuScreen(game));
+            return false;
+        }
+
         for (int i = 0; i < 26; i++)
             if (textButtons[i].isReleased()) {
                 // todo make the index of the button effect the type of main game created
