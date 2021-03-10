@@ -19,7 +19,8 @@ public class MainMenuScreen extends BaseScreen {
         playButton = new TextButton(
                 Gdx.app.getGraphics().getWidth() / 2f - 450,
                 Gdx.app.getGraphics().getHeight() / 2f - 200,
-                900, 400, "start",
+                Math.min(900, Gdx.app.getGraphics().getWidth()-20),
+                400, "start",
                 FontManager.font256, FontManager.font256Alt);
 
         settingsButton = new ImageButton(
