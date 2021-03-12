@@ -8,15 +8,41 @@ import com.testing.objects.RectangleButton;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class containing main logic for the game.
+ * <p>
+ * when updated through {@link BaseObject#objectUpdate()}} the game is played.
+ * {@link Sequence} and {@link GameLogic#rects} are updated in {@link com.testing.screens.MainGameScreen}
+ */
 public class GameLogic extends BaseObject {
 
+    /**
+     * List of buttons used to play the game.
+     */
     private final RectangleButton[] rects;
+
+    /**
+     * {@link Sequence} object holding necessary data and some of the functionality
+     */
     private final Sequence sequence;
+
+    /**
+     * How long the sequence of button presses is, not how big the grid it
+     */
     private final int sequenceLength;
 
     private boolean success;
+
+    /**
+     * which iteration of the sequence is being played (not the current level)
+     */
     private int round;
 
+    /**
+     * Constructor. Positions the buttons in a grid. Initializes the {@link Sequence}.
+     * @param sequenceLength length of the sequence
+     * @param gridSize length of one side of the grid (grid contains gridSize^2 buttons)
+     */
     public GameLogic(int sequenceLength, int gridSize) {
         this.sequenceLength = sequenceLength;
 
@@ -46,6 +72,26 @@ public class GameLogic extends BaseObject {
 
     }
 
+    /**
+     * Take different action depending what state the game is in.
+     * <p>
+     * PROMPT:
+     *  phase of the game when the sequence is played
+     *  squares are blinked in sequence (using {@link RectangleButton#blink(int frames)}
+     * ANSWER:
+     *  the user repeats back the sequence
+     *  they enter it by pressing the buttons
+     *  buttons blink when pressed
+     *  input is recorded and stored by the sequence object
+     * RESULT:
+     *  this state can result from both success or failure
+     *  in order to complete the level, the user has to succeed in all rounds
+     *  {@link Sequence#isSuccess()} returns whether the user succeeded in the current round
+     *  {@link GameLogic#success} holds information about success in all rounds
+     *  from the result state, program goes to the next round and returns to IDLE
+     *
+     * @param roundLength how long is the currently shown sequence (not the total length of sequence)
+     */
     private void actOnState(int roundLength) {
         sequence.setLength(roundLength + 1);
         switch (sequence.getState()) {
@@ -74,11 +120,15 @@ public class GameLogic extends BaseObject {
 
     }
 
+    /**
+     * checking whether the user has not failed and the rounds have not ended
+     */
     @Override
     protected void objectUpdate() {
         if (success && round < sequenceLength) {
             actOnState(round);
         } else {
+            // TODO: do something with the value of success
             System.out.println(success ? "success" : "no");
         }
     }
