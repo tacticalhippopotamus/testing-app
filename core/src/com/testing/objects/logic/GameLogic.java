@@ -12,8 +12,16 @@ public class GameLogic extends BaseObject {
 
     private final RectangleButton[] rects;
     private final Sequence sequence;
+    private final int sequenceLength;
+
+    private boolean success;
+    private int round;
 
     public GameLogic(int sequenceLength, int gridSize) {
+        this.sequenceLength = sequenceLength;
+
+        success = true;
+        round = 0;
 
         //TODO: better way to position buttons
         int screenWidth = Gdx.graphics.getWidth();
@@ -38,9 +46,8 @@ public class GameLogic extends BaseObject {
 
     }
 
-
-    @Override
-    protected void objectUpdate() {
+    private void actOnState(int roundLength) {
+        sequence.setLength(roundLength + 1);
         switch (sequence.getState()) {
             case IDLE:
                 break;
@@ -59,14 +66,21 @@ public class GameLogic extends BaseObject {
                 }
                 break;
             case RESULT:
-                if (sequence.isSuccess()) {
-                    System.out.println("Success");
-                } else {
-                    System.out.println("No");
-                }
+                success = sequence.isSuccess() && success;
+                round++;
+                sequence.setState(GameState.IDLE);
                 break;
         }
 
+    }
+
+    @Override
+    protected void objectUpdate() {
+        if (success && round < sequenceLength) {
+            actOnState(round);
+        } else {
+            System.out.println(success ? "success" : "no");
+        }
     }
 
 

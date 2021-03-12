@@ -79,7 +79,7 @@ public class LevelSelectScreen extends BaseScreen {
             if (textButtons[i].isReleased()) {
                 // todo make the index of the button effect the type of main game created
                 //  ie. make it more difficult for higher indexes
-                game.setScreen(new MainGameScreen(game));
+                game.setScreen(new MainGameScreen(game, i));
                 this.dispose();
                 return false;
             }

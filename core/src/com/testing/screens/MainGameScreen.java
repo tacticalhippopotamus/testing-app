@@ -9,13 +9,12 @@ import com.testing.objects.logic.GameLogic;
 
 public class MainGameScreen extends BaseScreen {
 
-    private final GameLogic gameLogic;
 
-
-    public MainGameScreen(TestingApp game) {
+    public MainGameScreen(TestingApp game, int level) {
         super(game);
 
-        gameLogic = new GameLogic(3, 3);
+        // TODO: this is not balanced at all and is only used to check if level selection affects the levels (it does)
+        GameLogic gameLogic = new GameLogic((level / 2) + 3, (level / 4) + 2);
         objects.add(gameLogic);
         objects.addAll(gameLogic.getRects()); // this was not intentional
         objects.add(gameLogic.getSequence());

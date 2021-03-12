@@ -10,8 +10,8 @@ public class Sequence extends BaseObject {
     private final static Random rng = new Random();
 
     private final List<Integer> sequence;
-    private final int length;
     private final int delayFrames;
+    private int length;
     private int current = -1;
     private int delayCount = 0;
 
@@ -54,11 +54,17 @@ public class Sequence extends BaseObject {
         if (current < length) {
             success = sequence.get(current) == i;
             if (!success || current == length - 1) {
-                state = GameState.RESULT;
+                goToResults();
             }
             return;
         }
+        goToResults();
+    }
+
+    public void goToResults() {
         state = GameState.RESULT;
+        current = -1;
+
     }
 
     private void delayCounter() {
@@ -78,8 +84,16 @@ public class Sequence extends BaseObject {
         return state;
     }
 
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
     public boolean isSuccess() {
         return success;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
     @Override
