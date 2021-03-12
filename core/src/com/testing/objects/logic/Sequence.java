@@ -19,7 +19,7 @@ public class Sequence extends BaseObject {
 
     private boolean done = false;
 
-    public Sequence(int length, byte gridSize, int delayFrames) {
+    public Sequence(int length, int gridSize, int delayFrames) {
         this.length = length;
         this.delayFrames = delayFrames;
         sequence = new ArrayList<>(length);
@@ -30,7 +30,7 @@ public class Sequence extends BaseObject {
         }
     }
 
-    public Sequence(int length, byte gridSize) {
+    public Sequence(int length, int gridSize) {
         this(length, gridSize, 30);
     }
 
