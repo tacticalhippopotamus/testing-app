@@ -7,9 +7,12 @@ import com.testing.oti.OTIDrawable;
 
 public class RectangleButton extends Button implements OTIDrawable {
 
-    private final ShapeRenderer renderer;
+    // FIXME: This is a mess
+
+    private final static ShapeRenderer renderer = new ShapeRenderer();
+    static int blinkCount = 0; // this should have been static in this method
+    private final Color originalColor;
     private Color color;
-    private Color originalColor;
     private byte blink = BlinkState.NONE;
 
     /**
@@ -22,8 +25,6 @@ public class RectangleButton extends Button implements OTIDrawable {
      */
     public RectangleButton(float x, float y, float width, float height, Color color) {
         super(x, y, width, height);
-        // FIXME: this is extremely very bad, have one renderer for every button
-        renderer = new ShapeRenderer();
         this.color = color;
         originalColor = color.cpy();
     }
@@ -40,24 +41,26 @@ public class RectangleButton extends Button implements OTIDrawable {
         color.add(Color.DARK_GRAY);
     }
 
-    public void restoreColor(){
-        //FIXME: this is also bad, needless allocation
-        color = originalColor.cpy();
+    public void restoreColor() {
+        // I think this is the cheapest copy of this object (without copying the reference)
+        color.a = originalColor.a;
+        color.r = originalColor.r;
+        color.g = originalColor.g;
+        color.b = originalColor.b;
     }
 
-    public void blink(int frames){
+    public void blink(int frames) {
         blink = BlinkState.BLINK;
         BlinkState.count = frames;
     }
 
-    static int blinkCount = 0; // this should have been static in this method
     @Override
-    protected void objectUpdate(){
-        if(blink == BlinkState.BLINK){
+    protected void objectUpdate() {
+        if (blink == BlinkState.BLINK) {
             lighten();
             blink = BlinkState.JUST;
-        } else if(blink == BlinkState.JUST){
-            if(blinkCount < BlinkState.count){
+        } else if (blink == BlinkState.JUST) {
+            if (blinkCount < BlinkState.count) {
                 blinkCount++;
             } else {
                 restoreColor();
@@ -79,10 +82,11 @@ public class RectangleButton extends Button implements OTIDrawable {
 
     @Override
     public void disposeDrawable() {
-        renderer.dispose();
+//        renderer.dispose();
+//        renderer is static, disposing of it would be bad
     }
 
-    private static class BlinkState{
+    private static class BlinkState {
         public static final byte NONE = 0;
         public static final byte JUST = 1;
         public static final byte BLINK = 2;
