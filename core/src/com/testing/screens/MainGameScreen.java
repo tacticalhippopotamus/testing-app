@@ -15,7 +15,7 @@ public class MainGameScreen extends BaseScreen {
     public MainGameScreen(TestingApp game) {
         super(game);
 
-        gameLogic = new GameLogic(4, 3);
+        gameLogic = new GameLogic(3, 3);
         objects.add(gameLogic);
         objects.addAll(gameLogic.getRects()); // this was not intentional
         objects.add(gameLogic.getSequence());

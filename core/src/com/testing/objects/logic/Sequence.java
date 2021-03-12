@@ -13,17 +13,21 @@ public class Sequence extends BaseObject {
     private final int length;
     private final int delayFrames;
     private int current = -1;
-    private boolean ready = false;
     private int delayCount = 0;
 
 
-    private boolean done = false;
+    private boolean success = true;
 
-    public Sequence(int length, int gridSize, int delayFrames) {
-        this.length = length;
+
+    private GameState state;
+
+    public Sequence(int sequenceLength, int gridSize, int delayFrames) {
+        this.length = sequenceLength;
         this.delayFrames = delayFrames;
-        sequence = new ArrayList<>(length);
-        for (int i = 0; i < length; i++) {
+
+        state = GameState.IDLE;
+        sequence = new ArrayList<>(sequenceLength);
+        for (int i = 0; i < sequenceLength; i++) {
             // NOTE: can be ThreadLocalRandom.current().nextInt(min, max); in java 7,
             // but that requires higher API level then what we're compiling with
             sequence.add(rng.nextInt(gridSize * gridSize));
@@ -39,35 +43,48 @@ public class Sequence extends BaseObject {
         if (current < length) {
             return sequence.get(current);
         }
-        done = true;
-        return 0;
+        state = GameState.ANSWER;
+        current = -1;
+        return -1;
     }
 
-    public List<Integer> getSequence() {
-        return sequence;
+
+    public void input(int i) {
+        current++;
+        if (current < length) {
+            success = sequence.get(current) == i;
+            if (!success || current == length - 1) {
+                state = GameState.RESULT;
+            }
+            return;
+        }
+        state = GameState.RESULT;
     }
 
-    public boolean isReady() {
-        return ready;
+    private void delayCounter() {
+        if (state == GameState.IDLE || state == GameState.PROMPT) {
+            delayCount++;
+            if (delayCount < delayFrames) {
+                state = GameState.IDLE;
+                return;
+            }
+
+            state = GameState.PROMPT;
+            delayCount = 0;
+        }
     }
 
-    public void setReady(boolean ready) {
-        this.ready = ready;
+    public GameState getState() {
+        return state;
     }
 
-    public boolean isDone() {
-        return done;
+    public boolean isSuccess() {
+        return success;
     }
 
     @Override
     protected void objectUpdate() {
-        delayCount++;
-        if (delayCount < delayFrames) {
-            ready = false;
-            return;
-        }
-        ready = true;
-        delayCount = 0;
+        delayCounter();
     }
 
 }
