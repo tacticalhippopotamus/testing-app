@@ -15,8 +15,11 @@ public class GameLogic extends BaseObject {
     private final Sequence sequence;
     private final List<Integer> inputSequence;
 
+    private GameState state;
+
     public GameLogic(int sequenceLength, int gridSize) {
 
+        state = GameState.PROMPT;
 
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
@@ -40,22 +43,46 @@ public class GameLogic extends BaseObject {
 
     }
 
+    void stateCheck() {
+
+        if (!sequence.isDone()) {
+            if (sequence.isReady()) {
+                state = GameState.PROMPT;
+            } else {
+                state = GameState.IDLE;
+            }
+            return;
+        }
+
+        if (sequence.isDone()) {
+            state = GameState.ANSWER;
+            return;
+        }
+    }
+
 
     @Override
     protected void objectUpdate() {
-        if (sequence.isDone()) {
-            for (int i = 0; i < rects.length; i++) {
-                if (rects[i].isReleased()) {
-                    rects[i].blink(5);
-                    inputSequence.add(i);
+        stateCheck();
+        switch (state) {
+            case IDLE:
+                break;
+            case PROMPT:
+                rects[sequence.yield()].blink(5);
+                break;
+            case ANSWER:
+                for (int i = 0; i < rects.length; i++) {
+                    if (rects[i].isReleased()) {
+                        rects[i].blink(5);
+                        inputSequence.add(i);
+                    }
                 }
-            }
-            System.out.println(inputSequence);
+                System.out.println(inputSequence);
+                break;
+            case RESULT:
+                break;
         }
 
-        if (sequence.isReady() && !sequence.isDone()) {
-            rects[sequence.yield()].blink(5);
-        }
     }
 
 
