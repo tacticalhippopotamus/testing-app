@@ -50,6 +50,7 @@ public class GameLogic extends BaseObject {
      *
      * @param sequenceLength length of the sequence
      * @param gridSize       length of one side of the grid (grid contains gridSize^2 buttons)
+     * @param delayFrames    how many frames between prompts
      */
     public GameLogic(int sequenceLength, int gridSize, int delayFrames) {
         this.sequenceLength = sequenceLength;
