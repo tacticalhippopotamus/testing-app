@@ -17,7 +17,7 @@ import java.util.List;
 public class GameLogic extends BaseObject {
 
     /**
-     * List of buttons used to play the game.
+     * Array of buttons used to play the game.
      */
     private final RectangleButton[] rects;
 
