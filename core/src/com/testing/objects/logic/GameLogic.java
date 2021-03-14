@@ -3,7 +3,7 @@ package com.testing.objects.logic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.testing.BaseObject;
-import com.testing.objects.RectangleButton;
+import com.testing.objects.ColorButton;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,14 +12,14 @@ import java.util.List;
  * Class containing main logic for the game.
  * <p>
  * when updated through {@link BaseObject#objectUpdate()}} the game is played.
- * {@link Sequence} and {@link GameLogic#rects} are updated in {@link com.testing.screens.MainGameScreen}
+ * {@link Sequence} and {@link GameLogic#colors} are updated in {@link com.testing.screens.MainGameScreen}
  */
 public class GameLogic extends BaseObject {
 
     /**
      * Array of buttons used to play the game.
      */
-    private final RectangleButton[] rects;
+    private final ColorButton[] colors;
 
     /**
      * {@link Sequence} object holding necessary data and some of the functionality
@@ -66,13 +66,13 @@ public class GameLogic extends BaseObject {
         int buttonWithGap = (gridOffsetX * 3) / gridSize;
         int gridOffsetY = (screenHeight - (buttonWithGap * gridSize)) / 2;
         int gap = buttonWithGap / 10;
-        rects = new RectangleButton[gridSize * gridSize];
+        colors = new ColorButton[gridSize * gridSize];
         sequence = new Sequence(sequenceLength, gridSize);
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 // TODO: better colors
-                rects[i * gridSize + j] = new RectangleButton(gridOffsetX, gridOffsetY, buttonWithGap - gap, buttonWithGap - gap,
+                colors[i * gridSize + j] = new ColorButton(gridOffsetX, gridOffsetY, buttonWithGap - gap, buttonWithGap - gap,
                         new Color((float) i / gridSize, 0.7f, (float) j / gridSize, 1f));
                 gridOffsetX += buttonWithGap;
             }
@@ -97,7 +97,7 @@ public class GameLogic extends BaseObject {
      * <p>
      * PROMPT:
      * phase of the game when the sequence is played
-     * squares are blinked in sequence (using {@link RectangleButton#blink(int frames)}
+     * squares are blinked in sequence (using {@link ColorButton#blink(int frames)}
      * ANSWER:
      * the user repeats back the sequence
      * they enter it by pressing the buttons
@@ -120,13 +120,13 @@ public class GameLogic extends BaseObject {
             case PROMPT:
                 int yield;
                 if ((yield = sequence.yield()) >= 0) {
-                    rects[yield].blink(5);
+                    colors[yield].blink(5);
                 }
                 break;
             case ANSWER:
-                for (int i = 0; i < rects.length; i++) {
-                    if (rects[i].isReleased()) {
-                        rects[i].blink(5);
+                for (int i = 0; i < colors.length; i++) {
+                    if (colors[i].isReleased()) {
+                        colors[i].blink(5);
                         sequence.input(i);
                     }
                 }
@@ -172,8 +172,8 @@ public class GameLogic extends BaseObject {
     }
 
 
-    public List<RectangleButton> getRects() {
-        return Arrays.asList(rects);
+    public List<ColorButton> getColors() {
+        return Arrays.asList(colors);
     }
 
     public Sequence getSequence() {

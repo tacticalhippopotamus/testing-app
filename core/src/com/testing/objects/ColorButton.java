@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.testing.oti.OTIDrawable;
 
-public class RectangleButton extends Button implements OTIDrawable {
+public class ColorButton extends Button implements OTIDrawable {
 
     // FIXME: This is a mess
 
@@ -23,7 +23,7 @@ public class RectangleButton extends Button implements OTIDrawable {
      * @param width  width of the button
      * @param height height of the button
      */
-    public RectangleButton(float x, float y, float width, float height, Color color) {
+    public ColorButton(float x, float y, float width, float height, Color color) {
         super(x, y, width, height);
         this.color = color;
         originalColor = color.cpy();
