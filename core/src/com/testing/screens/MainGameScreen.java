@@ -17,8 +17,6 @@ public class MainGameScreen extends BaseScreen {
         GameLogic gameLogic = new GameLogic((level / 2) + 3, (level / 4) + 2);
         objects.add(gameLogic);
         objects.addAll(gameLogic.getRects()); // this was not intentional
-        objects.add(gameLogic.getSequence());
-
 
         background = new TextureObject("screen_bg/main_game_screen_bg2");
         objects.add(background); // Should this be here?

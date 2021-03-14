@@ -1,7 +1,5 @@
 package com.testing.objects.logic;
 
-import com.testing.BaseObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,7 +7,7 @@ import java.util.Random;
 /**
  * Data and basic functionality for {@link GameLogic}
  */
-public class Sequence extends BaseObject {
+public class Sequence {
     private final static Random rng = new Random();
 
     /**
@@ -17,10 +15,6 @@ public class Sequence extends BaseObject {
      */
     private final List<Integer> sequence;
 
-    /**
-     * how many frames between each blink in {@link GameState#PROMPT} stage
-     */
-    private final int delayFrames;
 
     /**
      * Current length of displayed sequence
@@ -32,10 +26,6 @@ public class Sequence extends BaseObject {
      */
     private int current = -1;
 
-    /**
-     * How many frames has it been since the last blink
-     */
-    private int delayCount = 0;
 
     private boolean success = true;
 
@@ -47,11 +37,8 @@ public class Sequence extends BaseObject {
      *
      * @param sequenceLength how long the sequence is
      * @param gridSize       how long the side of the grid it
-     * @param delayFrames    how many frames between blinks
      */
-    public Sequence(int sequenceLength, int gridSize, int delayFrames) {
-        this.delayFrames = delayFrames;
-
+    public Sequence(int sequenceLength, int gridSize) {
         state = GameState.IDLE;
         sequence = new ArrayList<>(sequenceLength);
         for (int i = 0; i < sequenceLength; i++) {
@@ -59,16 +46,6 @@ public class Sequence extends BaseObject {
             // but that requires higher API level then what we're compiling with
             sequence.add(rng.nextInt(gridSize * gridSize));
         }
-    }
-
-    /**
-     * calling the full constructor and defaulting delay between blinks to 30 frames
-     *
-     * @param sequenceLength length of the sequence
-     * @param gridSize       how long the side of the grid it
-     */
-    public Sequence(int sequenceLength, int gridSize) {
-        this(sequenceLength, gridSize, 30);
     }
 
     /**
@@ -113,22 +90,6 @@ public class Sequence extends BaseObject {
 
     }
 
-    /**
-     * introduces delay to the buttons blink for longer then a second
-     * when sufficient delay has been created, game moves to the next stage
-     */
-    private void delayCounter() {
-        if (state == GameState.IDLE || state == GameState.PROMPT) {
-            delayCount++;
-            if (delayCount < delayFrames) {
-                state = GameState.IDLE;
-                return;
-            }
-
-            state = GameState.PROMPT;
-            delayCount = 0;
-        }
-    }
 
     public GameState getState() {
         return state;
@@ -145,10 +106,4 @@ public class Sequence extends BaseObject {
     public void setLength(int length) {
         this.length = length;
     }
-
-    @Override
-    protected void objectUpdate() {
-        delayCounter();
-    }
-
 }

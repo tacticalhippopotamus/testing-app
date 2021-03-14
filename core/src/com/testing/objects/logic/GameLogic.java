@@ -30,8 +30,15 @@ public class GameLogic extends BaseObject {
      * How long the sequence of button presses is, not how big the grid it
      */
     private final int sequenceLength;
-
+    /**
+     * how many frames between each blink in {@link GameState#PROMPT} stage
+     */
+    private final int delayFrames;
     private boolean success;
+    /**
+     * How many frames has it been since the last blink
+     */
+    private int delayCount = 0;
 
     /**
      * which iteration of the sequence is being played (not the current level)
@@ -40,11 +47,13 @@ public class GameLogic extends BaseObject {
 
     /**
      * Constructor. Positions the buttons in a grid. Initializes the {@link Sequence}.
+     *
      * @param sequenceLength length of the sequence
-     * @param gridSize length of one side of the grid (grid contains gridSize^2 buttons)
+     * @param gridSize       length of one side of the grid (grid contains gridSize^2 buttons)
      */
-    public GameLogic(int sequenceLength, int gridSize) {
+    public GameLogic(int sequenceLength, int gridSize, int delayFrames) {
         this.sequenceLength = sequenceLength;
+        this.delayFrames = delayFrames;
 
         success = true;
         round = 0;
@@ -73,22 +82,32 @@ public class GameLogic extends BaseObject {
     }
 
     /**
+     * calling the full constructor and defaulting delay between blinks to 30 frames
+     *
+     * @param sequenceLength length of the sequence
+     * @param gridSize       how long the side of the grid it
+     */
+    public GameLogic(int sequenceLength, int gridSize) {
+        this(sequenceLength, gridSize, 30);
+    }
+
+    /**
      * Take different action depending what state the game is in.
      * <p>
      * PROMPT:
-     *  phase of the game when the sequence is played
-     *  squares are blinked in sequence (using {@link RectangleButton#blink(int frames)}
+     * phase of the game when the sequence is played
+     * squares are blinked in sequence (using {@link RectangleButton#blink(int frames)}
      * ANSWER:
-     *  the user repeats back the sequence
-     *  they enter it by pressing the buttons
-     *  buttons blink when pressed
-     *  input is recorded and stored by the sequence object
+     * the user repeats back the sequence
+     * they enter it by pressing the buttons
+     * buttons blink when pressed
+     * input is recorded and stored by the sequence object
      * RESULT:
-     *  this state can result from both success or failure
-     *  in order to complete the level, the user has to succeed in all rounds
-     *  {@link Sequence#isSuccess()} returns whether the user succeeded in the current round
-     *  {@link GameLogic#success} holds information about success in all rounds
-     *  from the result state, program goes to the next round and returns to IDLE
+     * this state can result from both success or failure
+     * in order to complete the level, the user has to succeed in all rounds
+     * {@link Sequence#isSuccess()} returns whether the user succeeded in the current round
+     * {@link GameLogic#success} holds information about success in all rounds
+     * from the result state, program goes to the next round and returns to IDLE
      *
      * @param roundLength how long is the currently shown sequence (not the total length of sequence)
      */
@@ -121,10 +140,28 @@ public class GameLogic extends BaseObject {
     }
 
     /**
+     * introduces delay to the buttons blink for longer then a second
+     * when sufficient delay has been created, game moves to the next stage
+     */
+    private void delayCounter() {
+        if (sequence.getState() == GameState.IDLE || sequence.getState() == GameState.PROMPT) {
+            delayCount++;
+            if (delayCount < delayFrames) {
+                sequence.setState(GameState.IDLE);
+                return;
+            }
+
+            sequence.setState(GameState.PROMPT);
+            delayCount = 0;
+        }
+    }
+
+    /**
      * checking whether the user has not failed and the rounds have not ended
      */
     @Override
     protected void objectUpdate() {
+        delayCounter();
         if (success && round < sequenceLength) {
             actOnState(round);
         } else {
