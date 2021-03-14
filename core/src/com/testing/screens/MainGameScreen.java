@@ -5,25 +5,33 @@ import com.badlogic.gdx.Input;
 import com.testing.BaseScreen;
 import com.testing.TestingApp;
 import com.testing.objects.TextureObject;
+import com.testing.objects.logic.GameLogic;
 
 public class MainGameScreen extends BaseScreen {
 
-    public MainGameScreen(TestingApp game) {
+
+    public MainGameScreen(TestingApp game, int level) {
         super(game);
 
-        background = new TextureObject("screen_bg/main_game_screen_bg");
+        // TODO: this is not balanced at all and is only used to check if level selection affects the levels (it does)
+        GameLogic gameLogic = new GameLogic((level / 2) + 3, (level / 4) + 2);
+        objects.add(gameLogic);
+
+        background = new TextureObject("screen_bg/main_game_screen_bg2");
     }
 
     /**
-     * Called when the screen should render itself.
+     * Custom update method to be overwritten. Is called before anything else in the render loop
      *
-     * @param delta The time in seconds since the last render.
+     * @return return false if the screen is being switched this frame.
      */
     @Override
-    public void render(float delta) {
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK))
+    protected boolean screenUpdate() {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             game.setScreen(new MainMenuScreen(game));
+            return false;
+        }
 
-        super.render(delta);
+        return true;
     }
 }

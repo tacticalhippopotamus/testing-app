@@ -15,15 +15,17 @@ public class OptionsScreen extends BaseScreen {
     }
 
     /**
-     * Called when the screen should render itself.
+     * Custom update method to be overwritten. Is called before anything else in the render loop
      *
-     * @param delta The time in seconds since the last render.
+     * @return return false if the screen is being switched this frame.
      */
     @Override
-    public void render(float delta) {
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK))
+    protected boolean screenUpdate() {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             game.setScreen(new MainMenuScreen(game));
+            return false;
+        }
 
-        super.render(delta);
+        return true;
     }
 }
