@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.testing.BaseObject;
 import com.testing.objects.ColorButton;
+import com.testing.oti.OTIDrawable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * when updated through {@link BaseObject#objectUpdate()}} the game is played.
  * {@link Sequence} and {@link GameLogic#colors} are updated in {@link com.testing.screens.MainGameScreen}
  */
-public class GameLogic extends BaseObject {
+public class GameLogic extends BaseObject implements OTIDrawable {
 
     /**
      * Array of buttons used to play the game.
@@ -36,10 +37,6 @@ public class GameLogic extends BaseObject {
      */
     private final int delayFrames;
 
-    /**
-     * batch used to update {@link ColorButton}
-     */
-    private final SpriteBatch batch; // TODO: do something about this later
     private boolean success;
     /**
      * How many frames has it been since the last blink
@@ -57,10 +54,9 @@ public class GameLogic extends BaseObject {
      * @param gridSize       length of one side of the grid (grid contains gridSize^2 buttons)
      * @param delayFrames    how many frames between prompts
      */
-    public GameLogic(int sequenceLength, int gridSize, int delayFrames, SpriteBatch batch) {
+    public GameLogic(int sequenceLength, int gridSize, int delayFrames) {
         this.sequenceLength = sequenceLength;
         this.delayFrames = delayFrames;
-        this.batch = batch;
 
         success = true;
         round = 0;
@@ -94,8 +90,8 @@ public class GameLogic extends BaseObject {
      * @param sequenceLength length of the sequence
      * @param gridSize       how long the side of the grid it
      */
-    public GameLogic(int sequenceLength, int gridSize, SpriteBatch batch) {
-        this(sequenceLength, gridSize, 30, batch);
+    public GameLogic(int sequenceLength, int gridSize) {
+        this(sequenceLength, gridSize, 30);
     }
 
     /**
@@ -169,9 +165,6 @@ public class GameLogic extends BaseObject {
     @Override
     protected void objectUpdate() {
         delayCounter();
-        for (ColorButton color : colors) {
-            color.update(batch);
-        }
         if (success && round < sequenceLength) {
             actOnState(round);
         } else {
@@ -187,5 +180,19 @@ public class GameLogic extends BaseObject {
 
     public Sequence getSequence() {
         return sequence;
+    }
+
+    @Override
+    public void updateDrawable(SpriteBatch batch) {
+        for (ColorButton color : colors) {
+            color.update(batch); // FIXME: this is running all updates (including not ones related to OTIDrawable)
+        }
+    }
+
+    @Override
+    public void disposeDrawable() {
+        for (ColorButton color : colors) {
+            color.dispose();
+        }
     }
 }
