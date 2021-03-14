@@ -2,6 +2,7 @@ package com.testing.objects.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.testing.BaseObject;
 import com.testing.objects.ColorButton;
 
@@ -34,12 +35,16 @@ public class GameLogic extends BaseObject {
      * how many frames between each blink in {@link GameState#PROMPT} stage
      */
     private final int delayFrames;
+
+    /**
+     * batch used to update {@link ColorButton}
+     */
+    private final SpriteBatch batch; // TODO: do something about this later
     private boolean success;
     /**
      * How many frames has it been since the last blink
      */
     private int delayCount = 0;
-
     /**
      * which iteration of the sequence is being played (not the current level)
      */
@@ -52,9 +57,10 @@ public class GameLogic extends BaseObject {
      * @param gridSize       length of one side of the grid (grid contains gridSize^2 buttons)
      * @param delayFrames    how many frames between prompts
      */
-    public GameLogic(int sequenceLength, int gridSize, int delayFrames) {
+    public GameLogic(int sequenceLength, int gridSize, int delayFrames, SpriteBatch batch) {
         this.sequenceLength = sequenceLength;
         this.delayFrames = delayFrames;
+        this.batch = batch;
 
         success = true;
         round = 0;
@@ -88,8 +94,8 @@ public class GameLogic extends BaseObject {
      * @param sequenceLength length of the sequence
      * @param gridSize       how long the side of the grid it
      */
-    public GameLogic(int sequenceLength, int gridSize) {
-        this(sequenceLength, gridSize, 30);
+    public GameLogic(int sequenceLength, int gridSize, SpriteBatch batch) {
+        this(sequenceLength, gridSize, 30, batch);
     }
 
     /**
@@ -163,6 +169,9 @@ public class GameLogic extends BaseObject {
     @Override
     protected void objectUpdate() {
         delayCounter();
+        for (ColorButton color : colors) {
+            color.update(batch);
+        }
         if (success && round < sequenceLength) {
             actOnState(round);
         } else {

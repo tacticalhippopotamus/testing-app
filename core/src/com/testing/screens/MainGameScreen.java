@@ -14,9 +14,9 @@ public class MainGameScreen extends BaseScreen {
         super(game);
 
         // TODO: this is not balanced at all and is only used to check if level selection affects the levels (it does)
-        GameLogic gameLogic = new GameLogic((level / 2) + 3, (level / 4) + 2);
+        GameLogic gameLogic = new GameLogic((level / 2) + 3, (level / 4) + 2, batch);
         objects.add(gameLogic);
-        objects.addAll(gameLogic.getColors());
+//        objects.addAll(gameLogic.getColors());
 
         background = new TextureObject("screen_bg/main_game_screen_bg2");
     }
