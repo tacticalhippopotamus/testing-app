@@ -1,8 +1,20 @@
 package com.testing.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
+    private final Game game;
+    private final Stage stage;
+
+    public MainMenuScreen(Game game) {
+        this.game = game;
+        stage = new Stage(new ScreenViewport());
+
+
+    }
 
     /**
      * Called when this screen becomes the current screen for a {@link Game}.
