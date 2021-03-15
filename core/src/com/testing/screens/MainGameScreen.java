@@ -1,37 +1,66 @@
 package com.testing.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.testing.BaseScreen;
-import com.testing.TestingApp;
-import com.testing.objects.TextureObject;
-import com.testing.objects.logic.GameLogic;
+import com.badlogic.gdx.Screen;
 
-public class MainGameScreen extends BaseScreen {
+public class MainGameScreen implements Screen {
 
+    /**
+     * Called when this screen becomes the current screen for a {@link Game}.
+     */
+    @Override
+    public void show() {
 
-    public MainGameScreen(TestingApp game, int level) {
-        super(game);
-
-        // TODO: this is not balanced at all and is only used to check if level selection affects the levels (it does)
-        GameLogic gameLogic = new GameLogic((level / 2) + 3, (level / 4) + 2);
-        objects.add(gameLogic);
-
-        background = new TextureObject("screen_bg/main_game_screen_bg2");
     }
 
     /**
-     * Custom update method to be overwritten. Is called before anything else in the render loop
+     * Called when the screen should render itself.
      *
-     * @return return false if the screen is being switched this frame.
+     * @param delta The time in seconds since the last render.
      */
     @Override
-    protected boolean screenUpdate() {
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            game.setScreen(new MainMenuScreen(game));
-            return false;
-        }
+    public void render(float delta) {
 
-        return true;
+    }
+
+    /**
+     * @param width
+     * @param height
+     * @see ApplicationListener#resize(int, int)
+     */
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    /**
+     * @see ApplicationListener#pause()
+     */
+    @Override
+    public void pause() {
+
+    }
+
+    /**
+     * @see ApplicationListener#resume()
+     */
+    @Override
+    public void resume() {
+
+    }
+
+    /**
+     * Called when this screen is no longer the current screen for a {@link Game}.
+     */
+    @Override
+    public void hide() {
+
+    }
+
+    /**
+     * Called when this screen should release all resources.
+     */
+    @Override
+    public void dispose() {
+
     }
 }

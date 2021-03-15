@@ -23,7 +23,7 @@ public class TestingApp extends Game {
         // populate global fonts
         FontManager.generateFonts();
 
-        this.setScreen(new MainMenuScreen(this));
+        //this.setScreen(new MainMenuScreen(this));
     }
 
     @Override

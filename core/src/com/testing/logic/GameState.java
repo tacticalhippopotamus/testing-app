@@ -1,4 +1,4 @@
-package com.testing.objects.logic;
+package com.testing.logic;
 
 public enum GameState {
     IDLE(),

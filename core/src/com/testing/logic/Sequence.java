@@ -1,4 +1,4 @@
-package com.testing.objects.logic;
+package com.testing.logic;
 
 import java.util.ArrayList;
 import java.util.List;
